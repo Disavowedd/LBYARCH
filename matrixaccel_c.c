@@ -17,7 +17,7 @@ int main(){
 	
 	for(j=0; j<totalCars; j++){
 		for(k=0; k<col; k++){
-			scanf("%lf", & carMatrix[j][k]);
+			scanf("%lf", &carMatrix[j][k]);
 		}
 	}
 }
