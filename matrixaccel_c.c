@@ -13,11 +13,11 @@ int main(){
 	int j,k;
 	
 	scanf("%d", &totalCars);
-	double carMatrix[totalCars][col];
+	float carMatrix[totalCars][col];
 	
 	for(j=0; j<totalCars; j++){
 		for(k=0; k<col; k++){
-			scanf("%lf", &carMatrix[j][k]);
+			scanf("%f", &carMatrix[j][k]);
 		}
 	}
 	 float initialVelocity, finalVelocity, time, velocity;
@@ -28,7 +28,7 @@ int main(){
 		printf("Car %d -> Initial Velocity: %.2f, Final Velocity: %.2f, Time: %.2f\n", j + 1, initialVelocity, finalVelocity, time); //for debugging only
 	 	
 	    velocity = getVelocity(initialVelocity, finalVelocity, time);
-        printf("Car %d Velocity: %.2f\n", j + 1, velocity); 
+        printf("Car %d Velocity: %.4f\n", j + 1, velocity); 
 	 }
 
 
