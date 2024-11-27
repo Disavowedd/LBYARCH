@@ -40,7 +40,7 @@ int main(){
 	printf("Time taken: %ld seconds %ld nanoseconds\n", seconds, nanoseconds);
 	 
 	free(carMatrix);
-	free(runtime);
+	
 
 	return 0;
 }
