@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-
+#include <math.h>
 extern void getAcceleration(int n, double* matrix, int* ans);
 
 
@@ -23,23 +22,45 @@ int main(){
 	for(k=0; k<nElements; k++){
 		scanf("%lf", &carMatrix[k]); 
 	}
-	struct timespec start, end;
-    clock_gettime(CLOCK_MONOTONIC, &start);
-
-	//convert to proper values
-	getAcceleration(num,carMatrix,ans);
-
-	clock_gettime(CLOCK_MONOTONIC, &end);
-
-	long seconds = end.tv_sec - start.tv_sec;
-    long nanoseconds = end.tv_nsec - start.tv_nsec;
-
 	
-	for(k=0; k<num; k++){
-		printf("%d - acceleration = %d\n", k, ans[k]);
+	
+	struct timespec start, end;
+	long seconds;
+	long nanoseconds;
+	long long* runtime = (long long*)malloc(30*sizeof(long long));;
+	
+	//run the program 30 times to get the timeaverage
+	for(k=0; k<30;k++){
+		//start time
+		clock_gettime(CLOCK_MONOTONIC, &start);
+		
+		//calculate acceleration 
+		getAcceleration(num,carMatrix,ans);
+		
+		//end time
+		clock_gettime(CLOCK_MONOTONIC, &end);
+
+		seconds = end.tv_sec - start.tv_sec;
+		nanoseconds = end.tv_nsec - start.tv_nsec;
+		seconds = seconds*1000000000;
+		runtime[k] = (long long)seconds + (long long)nanoseconds;
+		free(ans);
 	}
+	
+	long long timeaverage =0;
+	
+	//get the average 
+	for(k=0; k<30; k++){
+		timeaverage = timeaverage+runtime[k];
+	}
+	
+	timeaverage = timeaverage /30;
+	
+	
+	printf("Time taken: %ld nanoseconds\n", timeaverage);
 	 
-	printf("Time taken: %ld seconds %ld nanoseconds\n", seconds, nanoseconds);
+	free(carMatrix);
+	free(runtime);
 	return 0;
 
 }
