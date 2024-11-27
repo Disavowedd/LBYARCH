@@ -44,6 +44,10 @@ int main(){
 		nanoseconds = end.tv_nsec - start.tv_nsec;
 		seconds = seconds*1000000000;
 		timeaverage = (long)seconds + (long)nanoseconds;
+		
+	for(k=0; k<nElements; k++){
+		printf(" %d Acceleration = %d\n", k, ans[k])
+	}
 	
 	printf("Time taken: %ld nanoseconds\n", timeaverage);
 	 
