@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#define _POSIX_C_SOURCE 200809L
 
 extern void getAcceleration(int n, double* matrix, int* ans);
 
