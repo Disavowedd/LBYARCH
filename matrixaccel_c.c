@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+
 extern void getAcceleration(int n, double* matrix, int* ans);
 
 
@@ -27,7 +28,7 @@ int main(){
 	struct timespec start, end;
 	long seconds;
 	long nanoseconds;
-	long long* runtime = (long long*)malloc(30*sizeof(long long));;
+	long * runtime = (long*)malloc(30*sizeof(long));;
 	
 	//run the program 30 times to get the timeaverage
 	for(k=0; k<30;k++){
@@ -43,7 +44,7 @@ int main(){
 		seconds = end.tv_sec - start.tv_sec;
 		nanoseconds = end.tv_nsec - start.tv_nsec;
 		seconds = seconds*1000000000;
-		runtime[k] = (long long)seconds + (long long)nanoseconds;
+		runtime[k] = (long)seconds + (long)nanoseconds;
 		free(ans);
 	}
 	
@@ -54,7 +55,7 @@ int main(){
 		timeaverage = timeaverage+runtime[k];
 	}
 	
-	timeaverage = timeaverage /30;
+	timeaverage = timeaverage/30;
 	
 	
 	printf("Time taken: %ld nanoseconds\n", timeaverage);
