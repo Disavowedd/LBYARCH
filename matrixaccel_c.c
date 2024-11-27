@@ -25,31 +25,19 @@ int main(){
 		scanf("%lf", &carMatrix[k]); 
 	}
 
-	struct timespec start, end;
-	long seconds;
-	long nanoseconds;
-	long * runtime = (long*)malloc(30*sizeof(long));;
-	long timeaverage;
-	//run the program 30 times to get the timeaverage
-	//start time
-		clock_gettime(CLOCK_MONOTONIC, &start);
-		
-		//calculate acceleration 
-		getAcceleration(num,carMatrix,ans);
-		
-		//end time
-		clock_gettime(CLOCK_MONOTONIC, &end);
+		struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+	//convert to proper values
+	getAcceleration(num,carMatrix,ans);
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	long seconds = end.tv_sec - start.tv_sec;
+    long nanoseconds = end.tv_nsec - start.tv_nsec;
 
-		seconds = end.tv_sec - start.tv_sec;
-		nanoseconds = end.tv_nsec - start.tv_nsec;
-		seconds = seconds*1000000000;
-		timeaverage = (long)seconds + (long)nanoseconds;
-		
-	for(k=0; k<nElements; k++){
-		printf(" %d Acceleration = %d\n", k, ans[k])
+	for(k=0; k<num; k++){
+		printf("%d - acceleration = %d\n", k, ans[k]);
 	}
-	
-	printf("Time taken: %ld nanoseconds\n", timeaverage);
+
+	printf("Time taken: %ld seconds %ld nanoseconds\n", seconds, nanoseconds);
 	 
 	free(carMatrix);
 	free(runtime);
