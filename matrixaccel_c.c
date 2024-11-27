@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 
-extern float getVelocity(float initialVelocity, float finalVelocity, float time);
 extern void getAcceleration(int n, double* matrix, int* ans);
 
 
@@ -23,14 +23,23 @@ int main(){
 	for(k=0; k<nElements; k++){
 		scanf("%lf", &carMatrix[k]); 
 	}
-	
+	struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+
 	//convert to proper values
 	getAcceleration(num,carMatrix,ans);
+
+	clock_gettime(CLOCK_MONOTONIC, &end);
+
+	long seconds = end.tv_sec - start.tv_sec;
+    long nanoseconds = end.tv_nsec - start.tv_nsec;
+
 	
 	for(k=0; k<num; k++){
 		printf("%d - acceleration = %d\n", k, ans[k]);
 	}
 	 
+	printf("Time taken: %ld seconds %ld nanoseconds\n", seconds, nanoseconds);
 	return 0;
 
 }
