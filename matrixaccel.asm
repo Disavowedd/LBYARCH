@@ -1,24 +1,33 @@
 section .data
-constmh dd 1000.0
-constms dd 3600.0 
+constmh dq 1000.0
+constms dq 3600.0 
 
 section .text
 bits 64
 default rel
 
-global getVelocity
+global getAcceleration
 
+getAcceleration:
+	mov rdi, rdx	;good practice
+	mov r11,r8		;good practice
+	L1:	
+		movsd xmm5, [rdi]	; 1st element of nth car (initialspeed)
+		add rdi, 8
+		movsd xmm6, [rdi]	; 2nd element of the nth car (final speed
+		add rdi, 8	
+		movsd xmm7, [rdi]	; 3rd element of the nth car (time) 
+		add rdi, 8
+		
+		subsd xmm6,xmm5		; ans = finalspeed - initialspeed
+		mulsd xmm6, [constmh] 
+		divsd xmm6, [constms] 
+		divsd xmm6, xmm7	; accel = ans/time 
 
-
-getVelocity:
-    ;xmm0 = iniVelocity, xmm1 = finVelocity, xmm2 = time
-    ; ((finVelo - iniVelo) 1000.0) / 3600.0
-    subss xmm1, xmm0 ;this is Km/h
-    mulss xmm1, [constmh]
-    divss xmm1, [constms]
-    divss xmm1, xmm2
-    movss xmm0, xmm1
-
-
-
-    ret
+		
+		CVTSD2SI r10, xmm6  ; convert double to int
+	
+		mov [r11], r10  		; add to array
+		add r11, 4			; increment array
+		loop L1
+	ret

@@ -3,35 +3,34 @@
 
 
 extern float getVelocity(float initialVelocity, float finalVelocity, float time);
-extern int getAcceleration();
+extern void getAcceleration(int n, double* matrix, int* ans);
 
 
 int main(){
-	int totalCars;
+	int totalCars, num, nElements;
 	int col = 3; 
 	
 	int j,k;
 	
 	scanf("%d", &totalCars);
-	float carMatrix[totalCars][col];
+	nElements = totalCars * col;
+	num = totalCars;
 	
-	for(j=0; j<totalCars; j++){
-		for(k=0; k<col; k++){
-			scanf("%f", &carMatrix[j][k]);
-		}
+	int* ans =(int*)malloc(num*sizeof(int));
+	double* carMatrix =(double*)malloc(nElements*sizeof(double));
+
+	//get input
+	for(k=0; k<nElements; k++){
+		scanf("%lf", &carMatrix[k]); 
 	}
-	 float initialVelocity, finalVelocity, time, velocity;
-	 for (j = 0; j < totalCars; j++) {
-        initialVelocity = carMatrix[j][0];
-        finalVelocity = carMatrix[j][1];
-        time = carMatrix[j][2];
-		printf("Car %d -> Initial Velocity: %.2f, Final Velocity: %.2f, Time: %.2f\n", j + 1, initialVelocity, finalVelocity, time); //for debugging only
-	 	
-	    velocity = getVelocity(initialVelocity, finalVelocity, time);
-        printf("Car %d Velocity: %.4f\n", j + 1, velocity); 
-	 }
-
-
+	
+	//convert to proper values
+	getAcceleration(num,carMatrix,ans);
+	
+	for(k=0; k<num; k++){
+		printf("%d - acceleration = %d\n", k, ans[k]);
+	}
+	 
 	return 0;
 
 }
