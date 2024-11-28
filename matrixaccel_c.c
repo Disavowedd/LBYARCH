@@ -4,8 +4,8 @@
 #include <math.h>
 #define _POSIX_C_SOURCE 200809L
 
-extern void getAcceleration(int n, double* matrix, int* ans);
 
+extern void getAcceleration(int n, float* matrix, int* ans);
 
 int main(){
 	int totalCars, num, nElements;
@@ -18,14 +18,14 @@ int main(){
 	num = totalCars;
 	
 	int* ans =(int*)malloc(num*sizeof(int));
-	double* carMatrix =(double*)malloc(nElements*sizeof(double));
+	float* carMatrix =(float*)malloc(nElements*sizeof(float));
 
 	//get input
 	for(k=0; k<nElements; k++){
-		scanf("%lf", &carMatrix[k]); 
+		scanf("%f", &carMatrix[k]); 
 	}
 
-		struct timespec start, end;
+	struct timespec start, end;
     clock_gettime(CLOCK_MONOTONIC, &start);
 	//convert to proper values
 	getAcceleration(num,carMatrix,ans);
